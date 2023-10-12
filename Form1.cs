@@ -62,7 +62,18 @@ namespace bb84
                 serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), comboBox4.Text);
 
                 serialPort1.Open();
+                
+
+                serialPort2.PortName = "COM3";
+                serialPort2.BaudRate = Convert.ToInt32(comboBox2.Text);
+                serialPort2.DataBits = Convert.ToInt32(comboBox3.Text);
+                serialPort2.StopBits = (StopBits)Enum.Parse(typeof(StopBits), comboBox4.Text);
+                serialPort2.Parity = (Parity)Enum.Parse(typeof(Parity), comboBox4.Text);
+
+                serialPort2.Open();
+
                 progressBar1.Value = 100;
+
             }
             catch (Exception err)
             {
@@ -78,6 +89,7 @@ namespace bb84
             if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
+                serialPort2.Close();
                 progressBar1.Value = 0;
             }
 
@@ -88,7 +100,14 @@ namespace bb84
             if (serialPort1.IsOpen)
             {
                 dataOUT = richTextBox1.Text;
-                serialPort1.WriteLine(dataOUT);
+                if (checkBoxWriteLine.Checked)
+                {
+                    serialPort1.WriteLine(dataOUT);
+                }
+                else
+                {
+                    serialPort1.Write(dataOUT);
+                }
             }
         }
 
@@ -98,9 +117,33 @@ namespace bb84
             this.Invoke(new EventHandler(ShowData));
         }
 
+
         private void ShowData(object sender, EventArgs e)
         {
-            throw new 
+            rtbOutput.Text = dataIN;
+        }
+
+        private void buttonClearIn_Click(object sender, EventArgs e)
+        {
+            dataOUT = "";
+            richTextBox1.Text = dataOUT;
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            dataIN = "";
+            rtbOutput.Text = dataIN;
+        }
+
+        private void serialPort2_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            dataIN = serialPort2.ReadExisting();
+            this.Invoke(new EventHandler(ShowData));
         }
     }
 }
