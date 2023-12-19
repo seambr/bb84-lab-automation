@@ -36,7 +36,7 @@ String busData = "";
 // LASE SETTINGS
 const long pulseTime = 1000; // uS
 const int lasePin = 13;
-const long waitTime = 1000; // mS
+const long waitTime = 200; // mS
 
 // SEND HISTORY STORAGE
 const int READ_MEMORY_SIZE = 256;
