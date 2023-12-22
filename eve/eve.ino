@@ -25,10 +25,10 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define DEGREE_N45 "0ma00003680" // DEGREE_0 + 22.5deg in hex
 
 // TO SENDING WAVEPLATE
-#define SEGREE_0 "1ma00000200"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
-#define SEGREE_45 "1ma00002200"  // DEGREE_0 + 22.5deg in hex
-#define SEGREE_90 "1ma00004200"  // DEGREE_45 + 22.5deg in hex
-#define SEGREE_N45 "1ma00003680" // DEGREE_90 + 22.5deg in hex
+#define SEGREE_0 "Ama00000200"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+#define SEGREE_45 "Ama00002200"  // DEGREE_0 + 22.5deg in hex
+#define SEGREE_90 "Ama00004200"  // DEGREE_45 + 22.5deg in hex
+#define SEGREE_N45 "Ama00003680" // DEGREE_90 + 22.5deg in hex
 
 #define rxPin 5
 #define txPin 6
