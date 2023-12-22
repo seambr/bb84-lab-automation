@@ -20,7 +20,7 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 // TO COMMUNICATE WITH ELLB BUS CONTROLLER
 // 22.5 deg -> 00002000 in the ELL14's terms
 // 0PO0000B9FF
-#define DEGREE_0  "0ma00008FF6"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+#define DEGREE_0 "0ma00008FF6" // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
 // #define DEGREE_45 "0ma00009FF1"  // DEGREE_0 + 22.5deg in hex
 // #define DEGREE_90 "0ma0000BFF1"  // DEGREE_45 + 22.5deg in hex
 #define DEGREE_N45 "0ma0000EFF6" // DEGREE_90 + 22.5deg in hex
@@ -28,7 +28,7 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define rxPin 5
 #define txPin 6
 SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
-
+int busTimeout = 20;
 bool waitForResponse = true;
 
 String commandData = "";
@@ -225,7 +225,7 @@ bool changeReadBase(int angle)
     }
     // kksds
     holdTime = millis();
-    while (!busData.endsWith("\n") && (millis()-holdTime < 20))
+    while (!busData.endsWith("\n") && (millis() - holdTime < busTimeout))
     {
 
         while (mySerial.available() > 0)
@@ -327,12 +327,9 @@ void readPulseAsync()
                 Serial.print("2");
                 readBit = random(2); // 0 or 1
             }
-            // // Serial.println("delV");
-            // Serial.println(currentMax0);
-            // Serial.println(currentMax1);
+
             readBasis[readIndex] = angleToBase(currentReadBase);
             readBits[readIndex] = readBit;
-            // Serial.println(readBit);
             currentMax1 = 0;
             currentMax0 = 0;
             readIndex++;
