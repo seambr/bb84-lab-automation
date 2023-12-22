@@ -19,22 +19,23 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 
 // TO COMMUNICATE WITH ELLB BUS CONTROLLER
 // 22.5 deg -> 00002000 in the ELL14's terms
-#define DEGREE_0 "0ma00000200"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
-#define DEGREE_45 "0ma00002200"  // DEGREE_0 + 22.5deg in hex
-#define DEGREE_90 "0ma00004200"  // DEGREE_45 + 22.5deg in hex
-#define DEGREE_N45 "0ma00003680" // DEGREE_90 + 22.5deg in hex
+// 0PO0000B9FF
+#define DEGREE_0  "0ma00008FF6"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+// #define DEGREE_45 "0ma00009FF1"  // DEGREE_0 + 22.5deg in hex
+// #define DEGREE_90 "0ma0000BFF1"  // DEGREE_45 + 22.5deg in hex
+#define DEGREE_N45 "0ma0000EFF6" // DEGREE_90 + 22.5deg in hex
 
 #define rxPin 5
 #define txPin 6
 SoftwareSerial mySerial = SoftwareSerial(rxPin, txPin);
 
-bool waitForResponse = false;
+bool waitForResponse = true;
 
 String commandData = "";
 String busData = "";
 
 // LASE SETTINGS
-const long pulseTime = 1000; // uS
+const long pulseTime = 5000; // uS
 const int lasePin = 13;
 const long waitTime = 200; // mS
 
@@ -48,10 +49,11 @@ int readIndex = 0;
 int input0 = A0;
 int input1 = A2;
 unsigned long startTime;
+unsigned long holdTime;
 float currentMax0 = 0.0;
 float currentMax1 = 0.0;
 bool readingPulse;
-float delV = 0.5;
+float delV = 0.2;
 float triggerLevel = 0.5;
 bool manualMode = false; // Controls if new base is auto selected
 
@@ -93,6 +95,10 @@ void checkSerial()
             if (commandData == CLEAR_MEMORY)
             {
                 resetBitsAndBaseMemory();
+            }
+            if (commandData == "HOME")
+            {
+                mySerial.println("0ho0");
             }
             else if (commandData == PRINT_HIST)
             {
@@ -165,6 +171,7 @@ void printHistoryToSerial()
         if (basei != 'N' && biti != 8)
         {
             Serial.print(basei);
+            Serial.print(",");
         }
     }
     Serial.println("BIT");
@@ -176,6 +183,7 @@ void printHistoryToSerial()
         if (basei != 'N' && biti != 8)
         {
             Serial.print(biti);
+            Serial.print(",");
         }
     }
     Serial.println("");
@@ -211,12 +219,13 @@ bool changeReadBase(int angle)
         break;
     }
     // DELAY FOR A BIT
-    delay(300);
     if (!waitForResponse)
     {
         return true;
     }
-    while (!busData.endsWith("\n"))
+    // kksds
+    holdTime = millis();
+    while (!busData.endsWith("\n") && (millis()-holdTime < 20))
     {
 
         while (mySerial.available() > 0)
@@ -226,6 +235,7 @@ bool changeReadBase(int angle)
     }
 
     busData.trim();
+
     if (busData.charAt(1) == 'P' && busData.charAt(2) == 'O')
     {
         // success
@@ -302,23 +312,27 @@ void readPulseAsync()
             if (currentMax1 - currentMax0 > delV)
             {
                 // ONE
+                Serial.print("1");
                 readBit = 1; // 0 or 1
             }
             else if (currentMax0 - currentMax1 > delV)
             {
                 // ZERO
-
+                Serial.print("0");
                 readBit = 0; // 0 or 1
             }
             else
             {
                 // RANDOMLY PICK
+                Serial.print("2");
                 readBit = random(2); // 0 or 1
             }
-
+            // // Serial.println("delV");
+            // Serial.println(currentMax0);
+            // Serial.println(currentMax1);
             readBasis[readIndex] = angleToBase(currentReadBase);
             readBits[readIndex] = readBit;
-            Serial.println(readBit);
+            // Serial.println(readBit);
             currentMax1 = 0;
             currentMax0 = 0;
             readIndex++;
