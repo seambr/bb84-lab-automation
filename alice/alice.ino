@@ -29,11 +29,11 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define MOVE_REL2 "MR2"
 
 // 22.5 deg -> 00002000 in the ELL14's terms
-
-#define DEGREE_0 "0ma00000200"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
-#define DEGREE_45 "0ma00002200"  // DEGREE_0 + 22.5deg in hex
-#define DEGREE_90 "0ma00004200"  // DEGREE_45 + 22.5deg in hex
-#define DEGREE_N45 "0ma00003680" // DEGREE_90 + 22.5deg in hex
+//0PO0000C9F8
+#define DEGREE_0    "0ma0000830E"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+#define DEGREE_45   "0ma0000A30E"  // DEGREE_0 + 22.5deg in hex
+#define DEGREE_90   "0ma0000C30E"  // DEGREE_45 + 22.5deg in hex
+#define DEGREE_N45  "0ma0000E30E" // DEGREE_90 + 22.5deg in hex
 // #define DEGREE_0 "0ma00000000"
 // #define DEGREE_90 "0ma00010000"
 // #define DEGREE_45 "0ma00008000"
@@ -43,9 +43,9 @@ String commandData = "";
 String busData = "";
 
 // LASE SETTINGS
-const long pulseTime = 1000; // uS
+const long pulseTime = 5000; // uS
 const int lasePin = 8;
-const long waitTime = 200; // mS
+const long waitTime = 100; // mS
 
 // SEND HISTORY STORAGE
 const int SENT_MEMORY_SIZE = 256;
@@ -79,6 +79,7 @@ void setup()
     // Set the baud rate for the Serial object
     Serial.begin(9600);
     digitalWrite(lasePin, LOW);
+    resetBitsAndBaseMemory();
 }
 
 void loop()
@@ -101,6 +102,10 @@ void checkSerial()
             if (commandData == SEND_1_PULSE)
             {
                 sendPulse();
+            }
+            if (commandData == "HOME")
+            {
+                mySerial.println("0ho0");
             }
             else if (commandData == GET_OFFSET)
             {
@@ -164,7 +169,7 @@ void checkSerial()
             {
                 sendNRandomBitBase(8);
             }
-            else if (commandData == SEND_8_RAND)
+            else if (commandData == SEND_32_RAND)
             {
                 sendNRandomBitBase(32);
             }
@@ -274,9 +279,27 @@ void printHistoryToSerial()
     Serial.println("STARTING BIT DUMP");
     for (int i = 0; i < SENT_MEMORY_SIZE; i++)
     {
-        Serial.print(sentBasis[i]);
-        Serial.print(sentBits[i]);
-        Serial.println("");
+        char basei = sentBasis[i];
+        int biti = sentBits[i];
+        if (basei != 'N' || biti != 8){
+          Serial.print(basei);
+          Serial.print(",");
+          
+
+        }
+
+    }
+    Serial.println("BIT");
+    for (int i = 0; i < SENT_MEMORY_SIZE; i++)
+    {
+        char basei = sentBasis[i];
+        int biti = sentBits[i];
+        if (basei != 'N' || biti != 8){
+          Serial.print(biti);
+          Serial.print(",");
+
+        }
+
     }
     Serial.println("END BIT DUMP");
 }
@@ -292,7 +315,7 @@ void sendPulseRandomBitRandomBase()
 
 void addBaseBitToHistory(int angle)
 {
-    int sentBase = angleToBase(angle);
+    char sentBase = angleToBase(angle);
     int sentBit = angleToBit(angle);
     sentBasis[sentIndex] = sentBase;
     sentBits[sentIndex] = sentBit;
@@ -317,7 +340,7 @@ void sendNRandomBitBase(int N)
 bool changeBase(int angle)
 {
     busData = "";
-    Serial.println(angle);
+    // Serial.println(angle);
     switch (angle)
     {
     case 0:
@@ -384,21 +407,21 @@ void resetBitsAndBaseMemory()
     sentIndex = 0;
 }
 
-int angleToBase(int angle)
+char angleToBase(int angle)
 {
     switch (angle)
     {
     case 0:
-        return "R";
+        return 'R';
         break;
     case 90:
-        return "R";
+        return 'R';
         break;
     case 45:
-        return "D";
+        return 'D';
         break;
     case -45:
-        return "D";
+        return 'D';
         break;
     default:
         // Do something when angle doesn't match any case
