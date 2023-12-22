@@ -70,6 +70,7 @@ void setup()
     // Set the baud rate for the Serial object
     Serial.begin(9600);
     currentReadBase = generateRandomReadBase();
+    changeReadBase(currentReadBase);
     resetBitsAndBaseMemory();
 }
 
@@ -106,7 +107,7 @@ void checkSerial()
             }
             else if (commandData == SET_MANUAL_MODE)
             {
-                manualMode = true;
+                manualMode = !manualMode;
             }
             // MOVING RELATIVE
             else if (commandData == MOVE_REL1)

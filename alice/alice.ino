@@ -34,10 +34,6 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define DEGREE_45 "0ma0000A30E"  // DEGREE_0 + 22.5deg in hex
 #define DEGREE_90 "0ma0000C30E"  // DEGREE_45 + 22.5deg in hex
 #define DEGREE_N45 "0ma0000E30E" // DEGREE_90 + 22.5deg in hex
-// #define DEGREE_0 "0ma00000000"
-// #define DEGREE_90 "0ma00010000"
-// #define DEGREE_45 "0ma00008000"
-// #define DEGREE_N45 "0ma0000D200"
 
 String commandData = "";
 String busData = "";
