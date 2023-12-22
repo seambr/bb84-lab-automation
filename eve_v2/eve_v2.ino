@@ -7,23 +7,40 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 
 // USER COMMANDS
 
-#define SET_BASIS_00 "S000"
-#define SET_BASIS_90 "S090"
-#define SET_BASIS_45 "S045"
-#define SET_BASIS_315 "S315"
+#define SET_READ_00 "R000"
+#define SET_READ_315 "R315"
+
+#define SET_SEND_00 "S000"
+#define SET_SEND_90 "S090"
+#define SET_SEND_45 "S045"
+#define SET_SEND_315 "S315"
+
 #define CLEAR_MEMORY "CMR"
 #define SET_MANUAL_MODE "SMM"
 #define PRINT_HIST "PHS"
 #define MOVE_REL1 "MR1"
 #define MOVE_REL2 "MR2"
 
+#define SEND_REL1 "SR1"
+#define SEND_REL2 "SR2"
+
+#define START_ALIGN "STA"
+#define END_ALIGN "ENA"
+
+#define CHANGE_ADRESS_TO_1 "CATA"
+#define CHANGE_ADRESS_TO_0 "CAT0"
+
 // TO COMMUNICATE WITH ELLB BUS CONTROLLER
 // 22.5 deg -> 00002000 in the ELL14's terms
-// 0PO0000B9FF
-#define DEGREE_0 "0ma00008FF6" // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
-// #define DEGREE_45 "0ma00009FF1"  // DEGREE_0 + 22.5deg in hex
-// #define DEGREE_90 "0ma0000BFF1"  // DEGREE_45 + 22.5deg in hex
+
+#define DEGREE_0 "0ma00008FF6"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
 #define DEGREE_N45 "0ma0000EFF6" // DEGREE_90 + 22.5deg in hex
+
+// TO SENDING WAVEPLATE
+#define SEGREE_0 "Ama00000200"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+#define SEGREE_45 "Ama00002200"  // DEGREE_0 + 22.5deg in hex
+#define SEGREE_90 "Ama00004200"  // DEGREE_45 + 22.5deg in hex
+#define SEGREE_N45 "Ama00003680" // DEGREE_90 + 22.5deg in hex
 
 #define rxPin 5
 #define txPin 6
@@ -36,8 +53,8 @@ String busData = "";
 
 // LASE SETTINGS
 const long pulseTime = 5000; // uS
-const int lasePin = 13;
-const long waitTime = 200; // mS
+const int lasePin = 8;
+const long waitTime = 400; // mS
 
 // FOR READING BITS
 int input0 = A0;
@@ -64,7 +81,7 @@ void setup()
   // Set the baud rate for the Serial object
   Serial.begin(9600);
   currentReadBase = generateRandomReadBase();
-  resetBitsAndBaseMemory();
+  changeReadBase(currentReadBase);
 }
 
 void loop()
@@ -85,22 +102,13 @@ void checkSerial()
       Serial.println(commandData);
       // End of message, process the commandData string
       commandData.trim(); // Remove leading/trailing whitespace and newlines
-
-      if (commandData == CLEAR_MEMORY)
-      {
-        resetBitsAndBaseMemory();
-      }
       if (commandData == "HOME")
       {
         mySerial.println("0ho0");
       }
-      else if (commandData == PRINT_HIST)
-      {
-        printHistoryToSerial();
-      }
       else if (commandData == SET_MANUAL_MODE)
       {
-        manualMode = true;
+        manualMode = !manualMode;
       }
       // MOVING RELATIVE
       else if (commandData == MOVE_REL1)
@@ -133,15 +141,138 @@ void checkSerial()
         Serial.println(busData);
         busData = "";
       }
-      else if (commandData == SET_BASIS_00)
+      else if (commandData == SEND_REL1)
+      {
+        mySerial.println("Amr00001000");
+        while (!busData.endsWith("\n"))
+        {
+          if (mySerial.available() > 0)
+          {
+            busData += char(mySerial.read()); // Read incoming characters
+          }
+        }
+
+        busData.trim();
+        Serial.println(busData);
+        busData = "";
+      }
+      else if (commandData == SEND_REL2)
+      {
+        mySerial.println("Amr00000800");
+        while (!busData.endsWith("\n"))
+        {
+          if (mySerial.available() > 0)
+          {
+            busData += char(mySerial.read()); // Read incoming characters
+          }
+        }
+
+        busData.trim();
+        Serial.println(busData);
+        busData = "";
+      }
+      else if (commandData == START_ALIGN)
+      {
+        digitalWrite(lasePin, HIGH);
+      }
+      else if (commandData == END_ALIGN)
+      {
+        digitalWrite(lasePin, LOW);
+      }
+      else if (commandData == SET_READ_00)
       {
         changeReadBase(0);
       }
-      else if (commandData == SET_BASIS_315)
+      else if (commandData == SET_READ_315)
       {
         changeReadBase(-45);
       }
-
+      else if (commandData == SET_SEND_00)
+      {
+        changeSendBase(0);
+      }
+      else if (commandData == SET_SEND_315)
+      {
+        changeSendBase(-45);
+      }
+      else if (commandData == SET_SEND_00)
+      {
+        changeSendBase(0);
+      }
+      else if (commandData == SET_SEND_315)
+      {
+        changeSendBase(-45);
+      }
+      else if (commandData == CHANGE_ADRESS_TO_1)
+      {
+        mySerial.println("0ca1");
+        delay(100);
+        mySerial.println("1ca1");
+        delay(100);
+        mySerial.println("2ca1");
+        delay(100);
+        mySerial.println("3ca1");
+        delay(100);
+        mySerial.println("4ca1");
+        delay(100);
+        mySerial.println("5ca1");
+        delay(100);
+        mySerial.println("6ca1");
+        delay(100);
+        mySerial.println("7ca1");
+        delay(100);
+        mySerial.println("8ca1");
+        delay(100);
+        mySerial.println("9ca1");
+        delay(100);
+        mySerial.println("Aca1");
+        delay(100);
+        mySerial.println("Bca1");
+        delay(100);
+        mySerial.println("Cca1");
+        delay(100);
+        mySerial.println("Dca1");
+        delay(100);
+        mySerial.println("Eca1");
+        delay(100);
+        mySerial.println("Fca1");
+        delay(100);
+      }
+      else if (commandData == CHANGE_ADRESS_TO_0)
+      {
+        mySerial.println("0ca0");
+        delay(100);
+        mySerial.println("1ca0");
+        delay(100);
+        mySerial.println("2ca0");
+        delay(100);
+        mySerial.println("3ca0");
+        delay(100);
+        mySerial.println("4ca0");
+        delay(100);
+        mySerial.println("5ca0");
+        delay(100);
+        mySerial.println("6ca0");
+        delay(100);
+        mySerial.println("7ca0");
+        delay(100);
+        mySerial.println("8ca0");
+        delay(100);
+        mySerial.println("9ca0");
+        delay(100);
+        mySerial.println("Aca0");
+        delay(100);
+        mySerial.println("Bca0");
+        delay(100);
+        mySerial.println("Cca0");
+        delay(100);
+        mySerial.println("Dca0");
+        delay(100);
+        mySerial.println("Eca0");
+        delay(100);
+        mySerial.println("Fca0");
+        delay(100);
+      }
       else
       {
         Serial.println("NOT A VALID COMMAND/MODE");
@@ -153,48 +284,6 @@ void checkSerial()
   }
 }
 
-void printHistoryToSerial()
-{
-  Serial.println("BASE");
-  Serial.println("STARTING BIT DUMP");
-  for (int i = 0; i < READ_MEMORY_SIZE; i++)
-  {
-
-    char basei = readBasis[i];
-    int biti = readBits[i];
-    if (basei != 'N' && biti != 8)
-    {
-      Serial.print(basei);
-      Serial.print(",");
-    }
-  }
-  Serial.println("BIT");
-  for (int i = 0; i < READ_MEMORY_SIZE; i++)
-  {
-
-    char basei = readBasis[i];
-    int biti = readBits[i];
-    if (basei != 'N' && biti != 8)
-    {
-      Serial.print(biti);
-      Serial.print(",");
-    }
-  }
-  Serial.println("");
-  Serial.println("END BIT DUMP");
-}
-
-void resetBitsAndBaseMemory()
-{
-
-  for (int i = 0; i < READ_MEMORY_SIZE; i++)
-  {
-    readBasis[i] = 'N';
-    readBits[i] = 8;
-  }
-  readIndex = 0;
-}
-// HEHREHRHER
 bool changeReadBase(int angle)
 {
   switch (angle)
@@ -326,14 +415,80 @@ void readPulseAsync()
       // KEEPING TRACK OF OUR HISTORY IS NOT NECESSARY
 
       // * Change send base to currentReadBase
-
+      changeSendBase(currentReadBase);
       // * Send Pulse
-
-      // * New read base, and update currentReadBase
+      sendPulse();
+      // * New read base, and update currentReadBase, and start scanning again
       if (!manualMode)
       {
         changeReadBase(generateRandomReadBase());
       }
     }
+  }
+}
+void sendPulse()
+{
+  // Set Output Pin to 5V
+  digitalWrite(lasePin, HIGH);
+
+  delayMicroseconds(pulseTime);
+  // Set Output Pin to 0V
+  digitalWrite(lasePin, LOW);
+}
+
+bool changeSendBase(int angle)
+{
+  busData = "";
+
+  switch (angle)
+  {
+  case 0:
+
+    mySerial.println(SEGREE_0);
+    break;
+  case 90:
+    mySerial.println(SEGREE_90);
+    break;
+  case 45:
+    mySerial.println(SEGREE_45);
+    break;
+  case -45:
+    mySerial.println(SEGREE_N45);
+    break;
+  default:
+    break;
+  }
+  // DELAY FOR A BIT
+  delay(300);
+  if (!waitForResponse)
+  {
+
+    return true;
+  }
+
+  while (!busData.endsWith("\n"))
+  {
+
+    while (mySerial.available() > 0)
+    {
+      busData += char(mySerial.read()); // Read incoming characters
+    }
+  }
+
+  busData.trim();
+  busData = "";
+  return true;
+  if (busData.charAt(1) == 'P' && busData.charAt(2) == 'O')
+  {
+    // success
+
+    busData = "";
+    return true;
+  }
+  else if (busData.charAt(1) == 'G' && busData.charAt(2) == 'S')
+  {
+
+    busData = "";
+    return false;
   }
 }

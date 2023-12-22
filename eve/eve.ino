@@ -11,6 +11,7 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define SET_BASIS_90 "S090"
 #define SET_BASIS_45 "S045"
 #define SET_BASIS_315 "S315"
+
 #define CLEAR_MEMORY "CMR"
 #define START_ALIGN "STA"
 #define END_ALIGN "ENA"
@@ -130,72 +131,72 @@ void checkSerial()
             else if (commandData == CHANGE_ADRESS_TO_1)
             {
                 mySerial.println("0ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("1ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("2ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("3ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("4ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("5ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("6ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("7ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("8ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("9ca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Aca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Bca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Cca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Dca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Eca1");
-                delay(500);
+                delay(100);
                 mySerial.println("Fca1");
-                delay(500);
+                delay(100);
             }
             else if (commandData == CHANGE_ADRESS_TO_0)
             {
                 mySerial.println("0ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("1ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("2ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("3ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("4ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("5ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("6ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("7ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("8ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("9ca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Aca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Bca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Cca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Dca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Eca0");
-                delay(500);
+                delay(100);
                 mySerial.println("Fca0");
-                delay(500);
+                delay(100);
             }
             else
             {
