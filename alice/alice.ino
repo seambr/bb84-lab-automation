@@ -29,11 +29,11 @@ THIS IS CODE FOR THE QUANTUM BB84 PROTOCOL AT STONYBROOK
 #define MOVE_REL2 "MR2"
 
 // 22.5 deg -> 00002000 in the ELL14's terms
-//0PO0000C9F8
-#define DEGREE_0    "0ma0000830E"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
-#define DEGREE_45   "0ma0000A30E"  // DEGREE_0 + 22.5deg in hex
-#define DEGREE_90   "0ma0000C30E"  // DEGREE_45 + 22.5deg in hex
-#define DEGREE_N45  "0ma0000E30E" // DEGREE_90 + 22.5deg in hex
+// 0PO0000C9F8
+#define DEGREE_0 "0ma0000830E"   // THIS IS THE OFFSET ANGLE FOUND VIA MR1/2
+#define DEGREE_45 "0ma0000A30E"  // DEGREE_0 + 22.5deg in hex
+#define DEGREE_90 "0ma0000C30E"  // DEGREE_45 + 22.5deg in hex
+#define DEGREE_N45 "0ma0000E30E" // DEGREE_90 + 22.5deg in hex
 // #define DEGREE_0 "0ma00000000"
 // #define DEGREE_90 "0ma00010000"
 // #define DEGREE_45 "0ma00008000"
@@ -45,7 +45,7 @@ String busData = "";
 // LASE SETTINGS
 const long pulseTime = 5000; // uS
 const int lasePin = 8;
-const long waitTime = 100; // mS
+const long waitTime = 400; // mS
 
 // SEND HISTORY STORAGE
 const int SENT_MEMORY_SIZE = 256;
@@ -281,25 +281,22 @@ void printHistoryToSerial()
     {
         char basei = sentBasis[i];
         int biti = sentBits[i];
-        if (basei != 'N' || biti != 8){
-          Serial.print(basei);
-          Serial.print(",");
-          
-
+        if (basei != 'N' || biti != 8)
+        {
+            Serial.print(basei);
+            Serial.print(",");
         }
-
     }
     Serial.println("BIT");
     for (int i = 0; i < SENT_MEMORY_SIZE; i++)
     {
         char basei = sentBasis[i];
         int biti = sentBits[i];
-        if (basei != 'N' || biti != 8){
-          Serial.print(biti);
-          Serial.print(",");
-
+        if (basei != 'N' || biti != 8)
+        {
+            Serial.print(biti);
+            Serial.print(",");
         }
-
     }
     Serial.println("END BIT DUMP");
 }
