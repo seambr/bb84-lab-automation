@@ -55,4 +55,19 @@ We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to tog
 
 ![Alt text](images/diagrams/laser_setup.png)
 
-To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a single supply inverting amplifier that I designed and had custom made.
+### Measuring Pulses
+
+To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a custom designed single supply inverting amplifier printed circuit board(PCB). The amplifier and its implementation is shown below.
+
+![Alt text](images/diagrams/photometer_setup.png)
+
+### Rotating Wave Plates
+
+To automate the rotation of the wave plates thus automating the measurement base selection we found the ELL14 motorized rotation mount was the right fit for the project(Along with the ELLB controller). It is capable of being controlled via a computer software or via a serial communication protocol outlined in the devices documentation. This allows to control the rotation of our wave plate programmatically over serial.
+
+![ELL14](images/diagrams/ELL14.jpg)
+
+#### Mounting
+
+Our mounting solution was a custom designed 3D printed holder that worked well with an optical bread board.
+![Alt text](images/parts/mount.png)
