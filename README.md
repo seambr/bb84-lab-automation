@@ -76,6 +76,6 @@ To automate the rotation of the wave plates thus automating the measurement base
 
 Our mounting solution was a custom designed 3D printed holder that worked well with an optical bread board.
 
-<p align="center" width="500px">
+<p align="center" width="300px">
   <img alt="ELL14 Image" src="images/parts/mount.png"/>
 </p>
