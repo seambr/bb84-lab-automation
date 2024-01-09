@@ -56,6 +56,7 @@ We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to tog
 <p align="center">
   <img alt="Laser Setup Image" src="images/diagrams/laser_setup.png" width="600px"/>
 </p>
+
 ### Measuring Pulses
 
 To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a custom designed single supply inverting amplifier printed circuit board(PCB). The amplifier and its implementation is shown below.
@@ -76,6 +77,7 @@ To automate the rotation of the wave plates thus automating the measurement base
 
 Our mounting solution was a custom designed 3D printed holder that worked well with an optical bread board.
 
-<p align="center">
-  <img alt="ELL14 Image" src="images/parts/mount.png" width="300px"/>
+<p align="center" display = "flex">
+  <img alt="Mount in 3D software" src="images/parts/mount.png" width="300px"/>
+  <img alt="Mount In Use" src="images/parts/mount-in-use.png" width="300px"/>
 </p>
