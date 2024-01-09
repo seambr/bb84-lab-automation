@@ -26,8 +26,8 @@ However, if an eavesdropper "Eve" may attempt to discreetly figure out this secr
 
 ## Starting Point
 
-![Thor Labs Quantum Cryptography Analogy Kit](images/diagrams/MTN005660-xl.jpg)
 This kit from Thor Labs provides a good starting point, but everything must be done manually which can get tedious for one times pads more than a few bits long. We need a way to perform this protocol automatically. We can split this into three parts:
+![Thor Labs Quantum Cryptography Analogy Kit](images/diagrams/QC_Kit_Components_A2-1000.jpg)
 
 ### Alice(The Sender)
 
@@ -39,7 +39,7 @@ This kit from Thor Labs provides a good starting point, but everything must be d
 
 1. Measuring the polarization of an incoming pulse
 2. Keeping track of incoming states
-3. Change Bases automatically
+3. Change Bases automatically after a measurement
 
 ### Eve(The Eavesdropper)
 
@@ -54,3 +54,5 @@ To solve these problems we use micro-controllers called Arduino. This micro-cont
 We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to toggle the 635nm laser diode module on and off with speed. We need to use a transistor as the Arduino's digital pins have a current limit that the laser would surpass.
 
 ![Alt text](images/diagrams/laser_setup.png)
+
+To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a single supply inverting amplifier that I designed and had custom made.
