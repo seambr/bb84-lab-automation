@@ -9,7 +9,7 @@ The BB84 protocol utilizes the uncertainty principle of quantum mechanics and a 
 This readme will focus mainly on the implementation of an automated version of the protocol. For further information see [this poster](docs/BB84_Quantum_Protocol_Adem_Akyasar_Poster.pdf), [this writeup](docs/Quantum_Cryptography_BB84.pdf), or [Bennett and Brassard's original 1984 paper](https://doi.org/10.1016/j.tcs.2014.05.025).
 
 <p align="center">
-  <img alt="theory_image" src="images/snips/theory_snip.png" class="theory-img"/>
+  <img alt="theory_image" src="images/snips/theory_snip.png"/>
 </p>
 
 ## The Protocol
@@ -53,21 +53,29 @@ To solve these problems we use micro-controllers called Arduino. This micro-cont
 
 We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to toggle the 635nm laser diode module on and off with speed. We need to use a transistor as the Arduino's digital pins have a current limit that the laser would surpass.
 
-![Alt text](images/diagrams/laser_setup.png)
-
+<p align="center" width="500px">
+  <img alt="Laser Setup Image" src="images/diagrams/laser_setup.png"/>
+</p>
 ### Measuring Pulses
 
 To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a custom designed single supply inverting amplifier printed circuit board(PCB). The amplifier and its implementation is shown below.
 
-![Alt text](images/diagrams/photometer_setup.png)
+<p align="center" width="500px">
+  <img alt="Photometer Setup Image" src="images/diagrams/photometer_setup.png"/>
+</p>
 
 ### Rotating Wave Plates
 
 To automate the rotation of the wave plates thus automating the measurement base selection we found the ELL14 motorized rotation mount was the right fit for the project(Along with the ELLB controller). It is capable of being controlled via a computer software or via a serial communication protocol outlined in the devices documentation. This allows to control the rotation of our wave plate programmatically over serial.
 
-![ELL14](images/diagrams/ELL14.jpg)
+<p align="center" width="500px">
+  <img alt="ELL14 Image" src="images/diagrams/ELL14.jpg"/>
+</p>
 
 #### Mounting
 
 Our mounting solution was a custom designed 3D printed holder that worked well with an optical bread board.
-![Alt text](images/parts/mount.png)
+
+<p align="center" width="500px">
+  <img alt="ELL14 Image" src="images/parts/mount.png"/>
+</p>
