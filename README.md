@@ -53,22 +53,22 @@ To solve these problems we use micro-controllers called Arduino. This micro-cont
 
 We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to toggle the 635nm laser diode module on and off with speed. We need to use a transistor as the Arduino's digital pins have a current limit that the laser would surpass.
 
-<p align="center" width="500px">
-  <img alt="Laser Setup Image" src="images/diagrams/laser_setup.png"/>
+<p align="center">
+  <img alt="Laser Setup Image" src="images/diagrams/laser_setup.png" width="600px"/>
 </p>
 ### Measuring Pulses
 
 To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a custom designed single supply inverting amplifier printed circuit board(PCB). The amplifier and its implementation is shown below.
 
-<p align="center" width="500px">
-  <img alt="Photometer Setup Image" src="images/diagrams/photometer_setup.png"/>
+<p align="center">
+  <img alt="Photometer Setup Image" src="images/diagrams/photometer_setup.png" width="600px"/>
 </p>
 
 ### Rotating Wave Plates
 
 To automate the rotation of the wave plates thus automating the measurement base selection we found the ELL14 motorized rotation mount was the right fit for the project(Along with the ELLB controller). It is capable of being controlled via a computer software or via a serial communication protocol outlined in the devices documentation. This allows to control the rotation of our wave plate programmatically over serial.
 
-<p align="center" width="500px">
+<p align="center">
   <img alt="ELL14 Image" src="images/diagrams/ELL14.jpg"/>
 </p>
 
@@ -76,6 +76,6 @@ To automate the rotation of the wave plates thus automating the measurement base
 
 Our mounting solution was a custom designed 3D printed holder that worked well with an optical bread board.
 
-<p align="center" width="300px">
-  <img alt="ELL14 Image" src="images/parts/mount.png"/>
+<p align="center">
+  <img alt="ELL14 Image" src="images/parts/mount.png" width="300px"/>
 </p>
