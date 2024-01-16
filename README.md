@@ -62,7 +62,8 @@ We use an Arduino and a MOSFET(BJT's have too much voltage loss) in order to tog
 To measure the state of a light pulse we can utilize the the wave plate, beam splitter, and double photometer combination used in the original kit. However, the photometers are quite interoperable with the arduino by default as when light is detected the voltage of photometer may be negative and this could cause damage. The solution was to use a custom designed single supply inverting amplifier printed circuit board(PCB). The amplifier and its implementation is shown below.
 
 <p align="center">
-  <img alt="Photometer Setup Image" src="images/diagrams/photometer_setup.png" width="600px"/>
+  <img alt="Photometer Setup Image" src="images/diagrams/photometer_setup.png" width="500px"/>
+  <img alt="Single Supply Op Amp PCB" src="images/parts/amp.png" width="500px"/>
 </p>
 
 ### Rotating Wave Plates
@@ -102,6 +103,9 @@ After comparing bases we get the following keys, which match as they should acco
 | Alice's Key | 0 | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 | Bob's Key | 0 | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 
+<p align="center" display = "flex">
+  <img alt="Setup" src="./images/setup.jpg" width="500px"/>
+</p>
 <p align="center" display = "flex">
   <img alt="Setup" src="./images/setup.jpg" width="500px"/>
 </p>
