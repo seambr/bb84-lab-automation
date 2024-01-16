@@ -103,5 +103,5 @@ After comparing bases we get the following keys, which match as they should acco
 | Bob's Key | 0 | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 
 <p align="center" display = "flex">
-  <img alt="Setup" src="images/setup.png" width="500px"/>
+  <img alt="Setup" src="./images/setup.jpg" width="500px"/>
 </p>
